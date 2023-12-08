@@ -1,4 +1,4 @@
-﻿function New-jLocalUser1 {
+﻿function New-jLocalUser {
 <#
 .SYNOPSIS
     Creates Local User and adds it to Users Local group.
@@ -137,7 +137,7 @@ Line: $($error[0].Exception.Line)
             return $rows
         }
     }
-        function Get-jCredential1 {
+        function Get-jCredential {
             [CmdletBinding()]
             [OutputType([Array])] #array of [PSCredential] objects
             Param (
@@ -231,7 +231,7 @@ Line: $($error[0].Exception.Line)
         $NewLocalUsers = @()
         #Checking if ParamemterSet ='string'
         if ($PsCmdlet.ParameterSetName -eq 'string') {
-                 $Credentials=(Get-jCredential1 -Name $Name -Admin $Admin).Password
+                 $Credentials=(Get-jCredential -Name $Name -Admin $Admin).Password
         }
         else {
             $csv=Export-jCSV -Path $Path
@@ -240,7 +240,7 @@ Line: $($error[0].Exception.Line)
         }
         # if expecting data from pipeline for -ComputerName parameter or -ComputerName is an array of PC names get admin credentials for Invoke-Command and go to Process Block. 
         if (($PSCmdlet.MyInvocation.ExpectingInput) -or ($ComputerName -notmatch 'localhost')) {
-            $AdminCredential=Get-jCredential1 -Name $Admin -Admin $Admin
+            $AdminCredential=Get-jCredential -Name $Admin -Admin $Admin
         }
     }
     process {    
